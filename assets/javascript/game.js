@@ -29,6 +29,13 @@ var characters = {
       attackPower: 1,
       counterAttackPower: 25,
     },
+
+    darthMaul: {
+      name: "Darth Maul",
+      health: 140,
+      attackPower: 3,
+      counterAttackPower: 10,
+    },
   };
   //Debugging
   console.log(characters);
@@ -52,8 +59,6 @@ var characters = {
   var gameOver = false;
   
   
-  //FUNCTIONS
-  //===========================================
   // This function will initialize the character value from the global object variables defined above
   function initializeCharacter(chosenCharacter) {
     character.name = chosenCharacter.name;
@@ -83,6 +88,7 @@ var characters = {
     $("#yoda").children(".health").html(characters.yoda.health);
     $("#darth-vader").children(".health").html(characters.darthVader.health);
     $("#darth-sidious").children(".health").html(characters.darthSidious.health);
+    $("#darth-maul").children(".health").html(characters.darthMaul.health);
   
     $(".character-image").removeClass("chosen-character enemy-character defender-character").addClass("available-character");
     var available = $(".available-character").show();
@@ -100,44 +106,34 @@ var characters = {
     defender = {};
   }
   
-  //MAIN PROCESS
-  //===========================================
-  // Run Javascript when the HTML has finished loading
+  
   $(document).ready(function() {
   
     // Hide the "Restart" button and "#game-message" on document load
     $("#restart").hide();
     $("#game-message").empty();
   
-    // Determine which character the user has clicked
     $("#luke").on("click", function () {
       console.log("Luke is selected");
-  
-      // User is choosing the character
+
       if(characterSelected === false) {
         $("#game-message").empty();
   
-        // Set the user's character
         initializeCharacter(characters.luke);
         characterSelected = true;
   
-        // Display the chosen character
         $("#luke").removeClass("available-character").addClass("chosen-character");
         $("#chosen-character").append(this);
   
-        // Move the remaining characters to the enemies section
         moveToEnemies();
   
       } else if ((characterSelected === true) && (defenderSelected === false)) {
-        // User is choosing the defender
         if($("#luke").hasClass("enemy-character")) {
           $("#game-message").empty();
   
-          // Set the user's enemy
           initializeDefender(characters.luke);
           defenderSelected = true;
   
-          // Add the character to the defender section
           $("#luke").removeClass("enemy-character").addClass("defender-character");
           $("#defender-div").append(this);
         }
@@ -147,31 +143,24 @@ var characters = {
     $("#yoda").on("click", function () {
       console.log("Yoda is selected");
   
-      // User is choosing the character
       if(characterSelected === false) {
         $("#game-message").empty();
   
-        // Set the user's character
         initializeCharacter(characters.yoda);
         characterSelected = true;
-  
-        // Display the chosen character
+
         $("#yoda").removeClass("available-character").addClass("chosen-character");
         $("#chosen-character").append(this);
   
-        // Move the remaining characters to the enemies section
         moveToEnemies();
   
       } else if ((characterSelected === true) && (defenderSelected === false)) {
-        // User is choosing the defender
         if($("#yoda").hasClass("enemy-character")) {
           $("#game-message").empty();
   
-          // Set the user's enemy
           initializeDefender(characters.yoda);
           defenderSelected = true;
   
-          // Add the character to the defender section
           $("#yoda").removeClass("enemy-character").addClass("defender-character");
           $("#defender-div").append(this);
         }
@@ -181,31 +170,24 @@ var characters = {
     $("#darth-vader").on("click", function () {
       console.log("Darth Vader is selected");
   
-      // User is choosing the character
       if(characterSelected === false) {
         $("#game-message").empty();
   
-        // Set the user's character
         initializeCharacter(characters.darthVader);
         characterSelected = true;
   
-        // Display the chosen character
         $("#darth-vader").removeClass("available-character").addClass("chosen-character");
         $("#chosen-character").append(this);
   
-        // Move the remaining characters to the enemies section
         moveToEnemies();
   
       } else if ((characterSelected === true) && (defenderSelected === false)) {
-        // User is choosing the defender
         if($("#darth-vader").hasClass("enemy-character")) {
           $("#game-message").empty();
   
-          // Set the user's enemy
           initializeDefender(characters.darthVader);
           defenderSelected = true;
   
-          // Add the character to the defender section
           $("#darth-vader").removeClass("enemy-character").addClass("defender-character");
           $("#defender-div").append(this);
         }
@@ -215,57 +197,73 @@ var characters = {
     $("#darth-sidious").on("click", function () {
       console.log("Darth Sidious is selected");
   
-      // User is choosing the character
       if(characterSelected == false) {
         $("#game-message").empty();
   
-        // Set the user's character
         initializeCharacter(characters.darthSidious);
         characterSelected = true;
   
-        // Display the chosen character
         $("#darth-sidious").removeClass("available-character").addClass("chosen-character");
         $("#chosen-character").append(this);
   
-        // Move the remaining characters to the enemies section
         moveToEnemies();
   
       } else if ((characterSelected === true) && (defenderSelected == false)) {
-        // User is choosing the defender
         if($("#darth-sidious").hasClass("enemy-character")) {
           $("#game-message").empty();
   
-          // Set the user's enemy
           initializeDefender(characters.darthSidious);
           defenderSelected = true;
   
-          // Add the character to the defender section
           $("#darth-sidious").removeClass("enemy-character").addClass("defender-character");
           $("#defender-div").append(this);
         }
       }
     });
+
+    // Determine which character the user has clickedx
+    $("#darth-maul").on("click", function () {
+      console.log("Darth Maul is selected");
   
-    //Attack button is clicked
+      if(characterSelected === false) {
+        $("#game-message").empty();
+  
+        initializeCharacter(characters.darthmaul);
+        characterSelected = true;
+  
+        $("#darth-maul").removeClass("available-character").addClass("chosen-character");
+        $("#chosen-character").append(this);
+  
+        moveToEnemies();
+  
+      } else if ((characterSelected === true) && (defenderSelected === false)) {
+        if($("#darth-maul").hasClass("enemy-character")) {
+          $("#game-message").empty();
+  
+          initializeDefender(characters.luke);
+          defenderSelected = true;
+  
+          $("#darth-maul").removeClass("enemy-character").addClass("defender-character");
+          $("#defender-div").append(this);
+        }
+      }
+    });
+  
+  
     $("#attack-btn").on("click", function() {
       console.log("Attack selected");
   
-      // User is ready to attack the defender
       if (characterSelected && defenderSelected && !gameOver) {
-        // User attacks the defender and decreases the defender's health points
         defender.health = defender.health - character.attackPower;
         $(".defender-character").children(".health").html(defender.health);
         $("#game-message").html("<p>You attacked " + defender.name + " for " + character.attackPower + " damage.<p>");
   
-        // User's attack power increases
         character.attackPower = character.attackPower + character.attackPower;
   
-        // If defender is still alive, they counter attack the user
         if (defender.health > 0) {
           character.health = character.health - defender.counterAttackPower;
           $(".chosen-character").children(".health").html(character.health);
   
-          // Check if the user survives the attack
           if (character.health > 0) {
             $("#game-message").append("<p>" + defender.name + " attacked you back for " + defender.counterAttackPower + " damage.</p>");
           } else {
@@ -274,14 +272,12 @@ var characters = {
             $("#restart").show();
           }
         } else {
-          // Defender is defeated
           enemiesDefeated++;
           defenderSelected = false;
           $("#game-message").html("<p>You have defeated " + defender.name + ". Choose another enemy.</p>");
           $(".defender-character").hide();
   
-          // Check if the user has won the game
-          if (enemiesDefeated === 3) {
+          if (enemiesDefeated === 4) {
             gameOver = true;
             $("#game-message").html("<p>You have won the game!!!</p><p>Play again?</p>");
             $("#restart").show();

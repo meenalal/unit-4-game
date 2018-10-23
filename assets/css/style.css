@@ -46,7 +46,7 @@ body {
 	border: 2px solid red;
 }
 
-#luke, #yoda, #darth-vader, #darth-sidious {
+#luke, #yoda, #darth-vader, #darth-sidious, #darth-maul {
 	display: inline-block;
 	text-align: center;
     margin-right: 1em;
